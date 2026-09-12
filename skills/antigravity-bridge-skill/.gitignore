@@ -1,0 +1,3 @@
+auth/antigravity-oauth-token
+scripts/__pycache__/
+*.pyc

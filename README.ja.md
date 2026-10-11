@@ -47,10 +47,24 @@ macOSキーチェーン、LinuxのSecret Service)に保存します。Claudeの�
 
 ## skillの導入手順
 
-1. このリポジトリをダウンロードまたはクローンします。
-2. `skills/antigravity-bridge-skill/` を、自分のClaude環境がskillを読み込む場所に配置します。
-3. 生成した `antigravity-oauth-token` ファイルを、そのskillの `auth/` フォルダに
-   (プレースホルダーを置き換える形で)配置します。
+各[リリース](https://github.com/mokouliszt/antigravity-bridge-skill/releases)には、
+GitHub Actionsがタグのコミットからビルドした `antigravity-bridge-skill.skill` が
+添付されます。これには認証情報が含まれていないため、そのままではサインインできません。
+自分のトークンを含めたパッケージを、次の手順でビルドしてください:
+
+1. このリポジトリをダウンロードまたはクローンし、トークンを
+   `skills/antigravity-bridge-skill/auth/antigravity-oauth-token` に配置します。
+2. 非公開パッケージをビルドします(Python 3の標準ライブラリだけで動きます):
+
+   ```bash
+   python3 .github/scripts/package_skill.py skills/antigravity-bridge-skill \
+     --token skills/antigravity-bridge-skill/auth/antigravity-oauth-token
+   ```
+
+   `dist/antigravity-bridge-skill-private.skill` が作成されます。
+3. そのファイルをClaudeにskillとしてアップロードします。フォルダからskillを読み込む
+   環境の場合は、`auth/` にトークンを入れた `skills/antigravity-bridge-skill/` を
+   その場所に配置します。
 4. 会話の中で、Antigravity CLI / `agy` / このブリッジの利用を明示的にClaudeへ指示します。
 
 ## セキュリティに関する注意
@@ -66,6 +80,13 @@ macOSキーチェーン、LinuxのSecret Service)に保存します。Claudeの�
 - このトークンにはリフレッシュトークンが含まれるため、Googleアカウントのサードパーティ
   アクセス設定からアクセスを取り消すまで、アクセストークン自体の短い有効期限を超えて
   使い続けられます。
+
+## リリース
+
+GitHubでリリースを公開すると `.github/workflows/release.yml` が実行され、
+`antigravity-bridge-skill.skill` がそのリリースに添付されます。Actionsタブから
+`v0.1` のようなタグ名を指定して、このワークフローを手動実行することもできます。
+既存のタグはそのままビルドし、まだ無いタグは、実行したブランチ上にリリースごと作成します。
 
 ## ライセンス
 

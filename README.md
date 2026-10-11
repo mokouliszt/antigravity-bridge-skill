@@ -49,11 +49,24 @@ private copy** of this skill.
 
 ## Installing the skill
 
-1. Download or clone this repository.
-2. Place `skills/antigravity-bridge-skill/` wherever your Claude setup loads
-   skills from.
-3. Put your generated `antigravity-oauth-token` file in that skill's `auth/`
-   folder, replacing the placeholder.
+Each [release](https://github.com/mokouliszt/antigravity-bridge-skill/releases)
+has `antigravity-bridge-skill.skill` attached, built from the tagged commit by
+GitHub Actions. It contains no credentials, so it cannot sign in on its own.
+Build your own package with your token inside:
+
+1. Download or clone this repository, and put your token at
+   `skills/antigravity-bridge-skill/auth/antigravity-oauth-token`.
+2. Build the private package (Python 3, standard library only):
+
+   ```bash
+   python3 .github/scripts/package_skill.py skills/antigravity-bridge-skill \
+     --token skills/antigravity-bridge-skill/auth/antigravity-oauth-token
+   ```
+
+   This writes `dist/antigravity-bridge-skill-private.skill`.
+3. Upload that file to Claude as a skill. If your Claude setup loads skills
+   from a folder instead, place `skills/antigravity-bridge-skill/` there with
+   the token in its `auth/` folder.
 4. In a conversation, explicitly ask Claude to use Antigravity CLI / `agy` /
    this bridge for a task.
 
@@ -71,6 +84,14 @@ private copy** of this skill.
 - The token includes a refresh token, so it keeps working beyond the short
   lifetime of the access token inside it, until you revoke access from your
   Google Account's third-party access settings.
+
+## Releases
+
+Publishing a release on GitHub runs `.github/workflows/release.yml`, which
+attaches `antigravity-bridge-skill.skill` to it. You can also run that workflow
+from the Actions tab with a tag name such as `v0.1`: an existing tag is built
+as it is, and a new one is created, with its release, on the branch the run
+uses.
 
 ## License
 

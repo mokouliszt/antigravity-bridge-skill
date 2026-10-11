@@ -1,0 +1,3 @@
+# Packages built by .github/scripts/package_skill.py. A private one holds your token.
+dist/
+*.skill

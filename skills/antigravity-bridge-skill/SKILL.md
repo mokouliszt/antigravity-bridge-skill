@@ -1,6 +1,6 @@
 ---
 name: antigravity-bridge-skill
-description: Invoke Google's Antigravity CLI (agy) from inside Claude's own sandbox, authenticated via the user's personal Antigravity subscription sign-in (never an API key). Use this ONLY when the user explicitly asks to use Antigravity CLI, agy, or "this bridge" for a task — never invoke it on your own judgment the way you might reach for a general-purpose tool. Typical explicit phrasings: "Antigravityに聞いて", "agyに投げて", "use antigravity for this", "run this through the antigravity bridge".
+description: "Invoke Google's Antigravity CLI (agy) from inside Claude's own sandbox, authenticated via the user's personal Antigravity subscription sign-in (never an API key). Use this ONLY when the user explicitly asks to use Antigravity CLI, agy, or \"this bridge\" for a task — never invoke it on your own judgment the way you might reach for a general-purpose tool. Typical explicit phrasings: \"Antigravityに聞いて\", \"agyに投げて\", \"use antigravity for this\", \"run this through the antigravity bridge\"."
 ---
 
 # antigravity-bridge-skill

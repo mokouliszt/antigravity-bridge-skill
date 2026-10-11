@@ -54,7 +54,10 @@ with open(pid_path, "w") as f:
 
 pid = os.fork()
 if pid == 0:
-    os.execvp(ask_sh, [ask_sh] + ask_args)
+    # Run ask.sh through bash rather than exec'ing it directly: the skill
+    # folder is often unpacked without executable bits, and exec'ing a
+    # non-executable script fails with EACCES (Permission denied).
+    os.execvp("bash", ["bash", ask_sh] + ask_args)
 else:
     _, status = os.waitpid(pid, 0)
     with open(done_path, "w") as f:

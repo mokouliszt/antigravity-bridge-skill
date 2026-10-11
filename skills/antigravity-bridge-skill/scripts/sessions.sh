@@ -39,7 +39,8 @@ case "$cmd" in
     sqlite3 -header -column "$DB" "SELECT * FROM $TABLE ORDER BY rowid DESC LIMIT 10;"
     ;;
   continue)
-    exec "$(dirname "${BASH_SOURCE[0]}")/ask.sh" --continue "$@"
+    # Through bash, so this works even if ask.sh lacks the executable bit.
+    exec bash "$(dirname "${BASH_SOURCE[0]}")/ask.sh" --continue "$@"
     ;;
   *)
     echo "Usage: sessions.sh {list|continue ...}" >&2
